@@ -54,7 +54,6 @@ function Login() {
             }
 
             let res = await loginUser(reqData);
-
             if (res?.data) {
                 localStorage.setItem("token", res?.data?.token);
                 localStorage.setItem('Id',res?.data?.user?.id)

@@ -18,14 +18,14 @@ export const productApi = createApi({
     }),
 
     delete: builder.mutation({
-      query: (data) => ({ url: `/delProduct?id=${data.id}`, method: "DELETE" }),  
+      query: (data) => ({ url: `/delProduct?id=${data.id}&&owner=${data?.owner}`, method: "DELETE" }),  
     }),
 
     update: builder.mutation({
       query: (data) => ({ url: `/updateProduct`, method: "PUT", body: data }),
     }),
     
-    EmpbyId: builder.mutation({
+    byId: builder.mutation({
       query: (data) => ({ url: `/findById?id=${data.id}`, method: "GET"})
     }),
 
@@ -40,7 +40,7 @@ export const productApi = createApi({
 const useAdd= productApi.endpoints.add.useMutation;
 const useList = productApi.endpoints.list.useQuery;
 const useDelete = productApi.endpoints.delete.useMutation;
-const useFindbyId = productApi.endpoints.EmpbyId.useMutation;
+const useFindbyId = productApi.endpoints.byId.useMutation;
 const useUpdate = productApi.endpoints.update.useMutation;
 const useCategories = productApi.endpoints.categoryList.useMutation;
 
