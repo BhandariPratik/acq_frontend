@@ -16,6 +16,8 @@ const AddEditProduct = () => {
     const [proData] = useFindbyId();
     const status = useRef(true)
     const [viewImg, setViewImg] = useState(null);
+    const [updateOwner,setUpdateOwner]=useState('');
+    console.log('updateOwner',updateOwner)
     const [formData, setFormData] = useState({
         name: '',
         proCode: '',
@@ -24,7 +26,7 @@ const AddEditProduct = () => {
         category: '',
         manDate: '',
         ExpiryDate: '',
-        Status: '',
+        Status: ''
     });
     const [errors, setErrors] = useState({});
 
@@ -49,6 +51,7 @@ const AddEditProduct = () => {
                 ExpiryDate: res?.data?.user?.expiryDate,
                 Status: res?.data?.user?.status,
             })
+            setUpdateOwner(res?.data?.user?.owner)
         }
     }
 
@@ -113,8 +116,7 @@ const AddEditProduct = () => {
         setErrors({});
 
         try {
-
-            let newdata = new FormData();
+            var newdata = new FormData();
             newdata.append('image', formData.image);
             newdata.append('name', formData.name);
             newdata.append('productCode', formData.proCode);
@@ -123,18 +125,18 @@ const AddEditProduct = () => {
             newdata.append('manufactureDate', formData.manDate);
             newdata.append('expiryDate', formData.ExpiryDate);
             newdata.append('Status', formData.Status);
-            newdata.append('owner', owner)
-            if (Id) {
-                newdata.append('id', Id);
-
-            }
+        
             let res;
             if (Id) {
-                res = await updatePro({ ...newdata, 'owner': res?.data?.user?.owner })
+                newdata.append('id', Id);
+                newdata.append('owner', updateOwner )
+                res = await updatePro(newdata)
             }
             else {
+                newdata.append('owner', owner )
                 res = await createPro(newdata);
             }
+
             if (res?.data) {
                 alert(res?.data?.message);
                 push('/product');
