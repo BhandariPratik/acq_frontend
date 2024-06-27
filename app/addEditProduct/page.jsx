@@ -17,7 +17,6 @@ const AddEditProduct = () => {
     const status = useRef(true)
     const [viewImg, setViewImg] = useState(null);
     const [updateOwner,setUpdateOwner]=useState('');
-    console.log('updateOwner',updateOwner)
     const [formData, setFormData] = useState({
         name: '',
         proCode: '',
@@ -40,7 +39,6 @@ const AddEditProduct = () => {
     const handleSetproData = async () => {
         if (Id) {
             const res = await proData({ id: Id })
-            console.log('res', res)
             setFormData({
                 name: res?.data?.user?.name,
                 proCode: res?.data?.user?.productCode,
